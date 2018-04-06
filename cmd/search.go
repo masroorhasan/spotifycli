@@ -17,7 +17,7 @@ var (
 func newSearchCmd() *cobra.Command {
 	searchCmd := &cobra.Command{
 		Use:   "search",
-		Short: "search by albums and playlists.",
+		Short: "search tracks, albums, artists, playlists by name",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return search(cmd, args)
 		},
@@ -37,7 +37,8 @@ func search(cmd *cobra.Command, args []string) error {
 	if results.Tracks != nil {
 		fmt.Println("Tracks:")
 		for _, item := range results.Tracks.Tracks {
-			fmt.Printf("%s\n", item.Name)
+			// TODO: pretty print
+			fmt.Printf("%s\t%s\t%s\t%d\n", item.ID, item.Name, item.Album.Name, item.Popularity)
 		}
 	}
 	return nil
