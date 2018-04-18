@@ -43,6 +43,8 @@ func NewRootCmd() *cobra.Command {
 	rootCmd.AddCommand(newDeletePlaylistCmd())
 	rootCmd.AddCommand(newAddtoPlaylistCmd())
 	rootCmd.AddCommand(newAddTrackByIDToPlaylistCmd())
+	rootCmd.AddCommand(newRemoveTrackFromPlaylistCmd())
+	rootCmd.AddCommand(newListPlaylistTracksCmd())
 	return rootCmd
 }
 

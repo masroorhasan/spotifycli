@@ -50,6 +50,7 @@ func searchTracks(query string) error {
 		return err
 	}
 
+	// iterate over tracks from query results
 	var data [][]interface{}
 	if results.Tracks != nil {
 		for _, item := range results.Tracks.Tracks {
@@ -61,6 +62,8 @@ func searchTracks(query string) error {
 			data = append(data, row)
 		}
 	}
+
+	// pretty print track results
 	printSimple([]string{"ID", "Name", "Album", "Artist", "Popularity"}, data)
 	return nil
 }
@@ -71,6 +74,7 @@ func searchAlbums(query string) error {
 		return err
 	}
 
+	// iterate over albums from query results
 	var data [][]interface{}
 	if results.Albums != nil {
 		for _, item := range results.Albums.Albums {
@@ -82,6 +86,8 @@ func searchAlbums(query string) error {
 			data = append(data, row)
 		}
 	}
+
+	// pretty print album results
 	printSimple([]string{"ID", "Name", "Artist", "Type", "Endpoint"}, data)
 	return nil
 }
@@ -92,6 +98,7 @@ func searchArtists(query string) error {
 		return nil
 	}
 
+	// iterate over artists from query results
 	var data [][]interface{}
 	if results.Artists != nil {
 		for _, item := range results.Artists.Artists {
@@ -103,6 +110,8 @@ func searchArtists(query string) error {
 			data = append(data, row)
 		}
 	}
+
+	// pretty print album results
 	printSimple([]string{"ID", "Name", "Genres", "Followers", "Endpoint"}, data)
 	return nil
 }
@@ -113,6 +122,7 @@ func searchPlaylists(query string) error {
 		return nil
 	}
 
+	// iterate over playlists from query results
 	var data [][]interface{}
 	if results.Playlists != nil {
 		for _, item := range results.Playlists.Playlists {
@@ -124,6 +134,8 @@ func searchPlaylists(query string) error {
 			data = append(data, row)
 		}
 	}
+
+	// pretty print playlist results
 	printSimple([]string{"ID", "Name", "Owner", "Total Tracks", "Endpoint"}, data)
 	return nil
 }
