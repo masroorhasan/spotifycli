@@ -14,8 +14,8 @@ jobs:
           command: go test -v ./...
 
   deploy:
-    machine:
-      enabled: true
+    docker:
+      - image: circleci/golang:1.9
     working_directory: /go/src/github.com/masroorhasan/spotifycli
     steps:
       - checkout
