@@ -229,16 +229,6 @@ func (u UUID) String() string {
 	return h[0:8] + "-" + h[8:12] + "-" + h[12:16] + "-" + h[16:20] + "-" + h[20:32]
 }
 
-// Encode formats the receiver UUID using the provided Encoder.
-func (u UUID) Encode(e Encoder) []byte {
-	return e.Encode([]byte(u))
-}
-
-// EncodeToString formats the receiver UUID using the provided EncodeToString.
-func (u UUID) EncodeToString(e EncoderToString) string {
-	return e.EncodeToString([]byte(u))
-}
-
 // NodeId extracts the node id from the receiver UUID.
 func (u UUID) NodeId() uint32 {
 	nodeId := binary.BigEndian.Uint64(u[8:16]) >> 16

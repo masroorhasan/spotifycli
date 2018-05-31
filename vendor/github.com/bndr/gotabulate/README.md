@@ -1,10 +1,10 @@
-# Gotabulate - Easily pretty-print tabular data
+# Gotabulate - Easily tabulate Data
 [![GoDoc](https://godoc.org/github.com/bndr/gotabulate?status.svg)](https://godoc.org/github.com/bndr/gotabulate)
 [![Build Status](https://travis-ci.org/bndr/gotabulate.svg?branch=master)](https://travis-ci.org/bndr/gotabulate)
 
 ## Summary
 
-Go-Tabulate - Generic Go Library for easy pretty-printing of tabular data. 
+Go-Tabulate - Generic Go Library for easy tabulation of your data. 
 
 ## Installation
 
@@ -13,12 +13,12 @@ Go-Tabulate - Generic Go Library for easy pretty-printing of tabular data.
 ## Description
 
 Supported data types:
-- 2D Array of `Int`, `Int64`, `Float64`, `String`, `interface{}`
-- Map of `String`, `interface{}` (Keys will be used as header)
+- 2D Array of Int, Int64, Float64, String, interface{}
+- Map of String, interface{} (Keys will be used as header)
 
 ## Usage
-
 ```go
+
 // Create Some Fake Rows
 row_1 := []interface{}{"john", 20, "ready"}
 row_2 := []interface{}{"bndr", 23, "ready"}
@@ -45,11 +45,12 @@ fmt.Println(t.Render("grid"))
 +---------+--------+-----------+
 |    bndr |     23 |     ready |
 +---------+--------+-----------+
+
 ```
 
 ## Example with String
 
-```go
+```
 // Some Strings
 string_1 := []string{"TV", "1000$", "Sold"}
 string_2 := []string{"PC", "50%", "on Hold"}
@@ -70,6 +71,7 @@ fmt.Println(tabulate.Render("simple"))
 
       PC         50%       on Hold
 ---------  ----------  ------------
+
 ```
 
 ## Example with String Wrapping
@@ -79,7 +81,6 @@ tabulate := gotabulate.Create([][]string{[]string{"Lorem ipsum dolor sit amet, c
 	"Vivamus laoreet vestibulum pretium. Nulla et ornare elit. Cum sociis natoque penatibus et magnis", "zzLorem ipsum", " test", "test"}, []string{"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus laoreet vestibulum pretium. Nulla et ornare elit. Cum sociis natoque penatibus et magnis",
 	"Vivamus laoreet vestibulum pretium. Nulla et ornare elit. Cum sociis natoque penatibus et magnis", "zzLorem ipsum", " test", "test"}, STRING_ARRAY, []string{"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus laoreet vestibulum pretium. Nulla et ornare elit. Cum sociis natoque penatibus et magnis",
 	"Vivamus laoreet vestibulum pretium. Nulla et ornare elit. Cum sociis natoque penatibus et magnis", "zzLorem ipsum", " test", "test"}, STRING_ARRAY})
-
 tabulate.SetHeaders([]string{"Header 1", "header 2", "header 3", "header 4"})
 // Set Max Cell Size
 tabulate.SetMaxCellSize(16)
@@ -130,16 +131,14 @@ fmt.Println(tabulate.Render("grid"))
 +---------------------+---------------------+----------------+-------------+-------------+
 |         test string |       test string 2 |           test |         row |        bndr |
 +---------------------+---------------------+----------------+-------------+-------------+
+
 ```
 ## Examples
 
-```go
+```
 t := gotabulate.Create([][]string{STRING_ARRAY, STRING_ARRAY})
-
 t.SetHeaders(HEADERS) // If not headers are set, the first row will be used.
-
 t.SetEmptyString("None") // Set what will be printed in the empty cell
-
 rendered_string := t.Render("simple") // Render() will return a string
 
 Simple Table
@@ -199,7 +198,6 @@ Align Left:
 ```
 
 ### Status
-
 Beta version. There may be edge cases that I have missed, so if your tables don't render properly please open up an issue. 
 
 ## Contribute
@@ -210,13 +208,10 @@ All Contributions are welcome. The todo list is on the bottom of this README. Fe
 
 Apache License 2.0
 
-## TODO
+### TODO
+- Add more examples
+- Implement more data table formats
 
-- [ ] Add more examples
-- [ ] Better Documentation
-- [ ] Implement more data table formats
-- [ ] Decimal point alignment for floats
+### Acknowledgement
 
-## Acknowledgement
-
-Inspired by Python package [tabulate](https://pypi.python.org/pypi/tabulate)
+Inspired by Python package https://pypi.python.org/pypi/tabulate
