@@ -15,6 +15,7 @@ jobs:
       - run:
           name: run tests
           command: |
+            go fmt ./...
             go vet ./...
             go test -v ./...
 
@@ -24,9 +25,9 @@ jobs:
     working_directory: /go/src/github.com/masroorhasan/spotifycli
     steps:
       - checkout
-      - run: go get github.com/mitchellh/gox
-      - run: go get github.com/tcnksm/ghr
-      - run: go get github.com/stevenmatthewt/semantics
+      - run: go get -u github.com/mitchellh/gox
+      - run: go get -u github.com/tcnksm/ghr
+      - run: go get -u github.com/stevenmatthewt/semantics
       - run:
           name: cross compile
           command: |
@@ -38,7 +39,6 @@ jobs:
           command: |
             tag=$(semantics --output-tag)
             if [ "$tag" ]; then
-              # Push to GitHub Release
               ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $tag dist/
             else
               echo "The commit message(s) did not indicate a major/minor/patch version."
