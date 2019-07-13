@@ -36,7 +36,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "37:e7:cd:57:3d:2e:58:5d:15:a4:d0:71:ab:15:75:57"
-            - "60:15:b8:35:c5:41:dd:85:c8:53:35:b0:92:2e:18:97"
       - run:
           name: create release
           command: |
