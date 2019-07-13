@@ -103,6 +103,17 @@ func newRemoveTrackFromPlaylistCmd() *cobra.Command {
 	return rmCmd
 }
 
+func newListPlaylistsCmd() *cobra.Command {
+	newCmd := &cobra.Command{
+		Use:   "playlists",
+		Short: "Show all playlists",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return listPlaylists(cmd, args)
+		},
+	}
+	return newCmd
+}
+
 func newCreatePlaylistCmd() *cobra.Command {
 	newCmd := &cobra.Command{
 		Use:   "new --p [PLAYLIST_NAME]",
@@ -199,6 +210,44 @@ func addto(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	fmt.Printf("Added track \"%s\" to playlist \"%s\".\n", playing.Item.Name, pl.Name)
+	return nil
+}
+
+func listPlaylists(cmd *cobra.Command, args []string) error {
+	// current user
+	user, err := client.CurrentUser()
+	if err != nil {
+		return err
+	}
+	fmt.Println("User: ", user.DisplayName)
+
+	// get all playlists for the user
+	playlists, err := getPlaylists()
+	if err != nil {
+		return err
+	}
+
+	// format resulting data
+	var data [][]interface{}
+	if playlists.Playlists != nil {
+		for _, item := range playlists.Playlists {
+			track := []string{
+				string(item.ID),
+				item.Name,
+				item.Owner.DisplayName,
+				strconv.FormatBool(item.IsPublic),
+				strconv.FormatBool(item.Collaborative),
+				strconv.FormatUint(uint64(item.Tracks.Total), 10)}
+			row := make([]interface{}, len(track))
+			for i, d := range track {
+				row[i] = d
+			}
+			data = append(data, row)
+		}
+	}
+
+	// pretty print track results
+	printSimple([]string{"ID", "Name", "Owner", "Public", "Collaborative", "Tracks"}, data)
 	return nil
 }
 
@@ -385,6 +434,15 @@ func listTracksFromPlaylist(cmd *cobra.Command, args []string) error {
 	// pretty print track results
 	printSimple([]string{"ID", "Name", "Album", "Artist", "Popularity"}, data)
 	return nil
+}
+
+func getPlaylists() (*spotify.SimplePlaylistPage, error) {
+	playlists, err := client.CurrentUsersPlaylists()
+	if err != nil {
+		return &(spotify.SimplePlaylistPage{}), err
+	}
+
+  return playlists, nil
 }
 
 func getPlaylistByName(playlistName string) (spotify.SimplePlaylist, error) {
