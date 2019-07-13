@@ -4,7 +4,7 @@ A command line interface to manage Spotify playlists.
 
 ## Install
 
-To use `spotifycli` you have to register the application on Spotify's developer platform. Sign up or login available [here](https://beta.developer.spotify.com/dashboard/login). Set the following environment variables with the client Id and secret. 
+To use `spotifycli` you have to register the application on Spotify's developer platform. Sign up or login available [here](https://beta.developer.spotify.com/dashboard/login). Set the following environment variables with the client Id and secret.
 
 ```
 export SPOTIFY_ID=xxx
@@ -33,8 +33,10 @@ Available Commands:
   logout      Logout from Spotify account
   new         Create new playlist
   now         Displays the currently playing track
+  playlists   Show all playlists
   rm          Remove track from playlist
   search      search tracks, albums, artists, playlists by name
+  show        Display information about a track by ID
 
 Flags:
   -h, --help   help for spotifycli
