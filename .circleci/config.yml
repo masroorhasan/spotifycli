@@ -35,7 +35,8 @@ jobs:
             cd dist/ && gzip *
       - add_ssh_keys:
           fingerprints:
-            - "f1:4e:0c:4d:09:ed:2d:a1:e8:38:dc:a6:86:d2:f5:dc"
+            - "37:e7:cd:57:3d:2e:58:5d:15:a4:d0:71:ab:15:75:57"
+            - "60:15:b8:35:c5:41:dd:85:c8:53:35:b0:92:2e:18:97"
       - run:
           name: create release
           command: |

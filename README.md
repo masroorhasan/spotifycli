@@ -1,5 +1,7 @@
 # Spotifycli
 
+[![CircleCI](https://circleci.com/gh/masroorhasan/spotifycli/tree/master.svg?style=svg)](https://circleci.com/gh/masroorhasan/spotifycli/tree/master)
+
 A command line interface to manage Spotify playlists.
 
 ## Install
