@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"sort"
 	"strconv"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/zmb3/spotify"
@@ -12,6 +13,10 @@ import (
 
 var (
 	addtoPlaylistName string
+)
+
+var (
+	trackID string
 )
 
 var (
@@ -50,6 +55,18 @@ func newCurrentTrackCmd() *cobra.Command {
 		},
 	}
 	return nowCmd
+}
+
+func newShowTrackCmd() *cobra.Command {
+	addtoCmd := &cobra.Command{
+		Use:   "show --tid [TRACK_ID]",
+		Short: "Display information about a track by ID",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return displayTrackById(cmd, args)
+		},
+	}
+	addtoCmd.Flags().StringVar(&trackID, "tid", "", "Id of track to display.")
+	return addtoCmd
 }
 
 func newAddtoPlaylistCmd() *cobra.Command {
@@ -150,6 +167,46 @@ func newListPlaylistTracksCmd() *cobra.Command {
 	return listCmd
 }
 
+func displayTrack(track *spotify.FullTrack) error {
+	// format and display
+	var data [][]interface{}
+	item := []string{
+		string(track.ID),
+		track.Name,
+		track.Album.Name,
+		track.Artists[0].Name,
+		(time.Duration(track.Duration) * time.Millisecond).Truncate(time.Second).String(),
+		strconv.Itoa(track.Popularity),
+		strconv.FormatBool(track.Explicit),
+		track.PreviewURL,
+	}
+	row := make([]interface{}, len(item))
+	for i, d := range item {
+		row[i] = d
+	}
+	data = append(data, row)
+	printSimple([]string{"ID", "Name", "Album", "Artist", "Duration", "Popularity", "Explicit", "Preview"}, data)
+	return nil
+}
+
+func displayTrackById(cmd *cobra.Command, args []string) error {
+	// current user
+	user, err := client.CurrentUser()
+	if err != nil {
+		return err
+	}
+	fmt.Println("User: ", user.DisplayName)
+
+	// get the track (check for existence)
+	track, err := client.GetTrack(spotify.ID(trackID))
+	if err != nil {
+		return err
+	}
+
+  displayTrack(track)
+  return nil
+}
+
 func displayCurrentTrack(cmd *cobra.Command, args []string) error {
 	// current user
 	user, err := client.CurrentUser()
@@ -164,21 +221,7 @@ func displayCurrentTrack(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// format and display
-	var data [][]interface{}
-	track := []string{
-		string(playing.Item.ID),
-		playing.Item.Name,
-		playing.Item.Album.Name,
-		playing.Item.Artists[0].Name,
-		playing.Item.Endpoint,
-	}
-	row := make([]interface{}, len(track))
-	for i, d := range track {
-		row[i] = d
-	}
-	data = append(data, row)
-	printSimple([]string{"ID", "Name", "Album", "Artist", "Endpoint"}, data)
+  displayTrack(playing.Item)
 	return nil
 }
 
