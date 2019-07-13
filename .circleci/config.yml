@@ -45,7 +45,7 @@ jobs:
             else
               echo "The commit message(s) did not indicate a major/minor/patch version."
             fi
-
+            
 workflows:
   version: 2
   build-deploy:
@@ -57,3 +57,4 @@ workflows:
           filters:
             branches:
               only: master
+              
