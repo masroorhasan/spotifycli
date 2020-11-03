@@ -44,7 +44,7 @@ func newLogoutCmd() *cobra.Command {
 
 func authorize(cmd *cobra.Command, args []string) error {
 	// use uuid as state
-	state := string(uuid.New())
+	state := string(uuid.New().Hex())
 
 	// setup server for callback
 	http.Handle("/callback", &authenticationHandler{auth: auth, state: state})
